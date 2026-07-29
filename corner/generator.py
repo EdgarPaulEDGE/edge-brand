@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """EDGE Corner, Emres Richtung: die Kante als Rahmenecke.
 
-Stand 2: Emres Feedback vom 29.07.2026 eingearbeitet.
+Stand 3: Emres Feedback plus Edgars Nachschliff vom 29.07.2026.
 - Eigener Schriftschnitt nach seiner Referenz (image Kopie.png), pixelgenau
   vermessen und auf das 160er-Raster normalisiert (Faktor 1,882):
   E mit Stamm unten links und 85%-Mittelbalken, D und G elliptisch gerundet,
@@ -35,20 +35,20 @@ ROT = "#FF6B6B"
 E_B, D_B, G_B = 220, 252, 254
 ABST = 35                          # Buchstabenabstand (Referenz 32-36)
 
-# E: oberer Balken frei, Mittel- und Unterbalken haengen am Stamm unten links.
-# Mittelbalken 85% der Breite. Das ist Emres "Strich ganz, nicht halb".
+# E: drei freie Balken ohne Stamm (Edgars Skizze), Mittelbalken auf Emres
+# 85% durchgezogen. Kombination aus beiden Vorgaben, Stand 3.
 E_EMRE = (f'<rect x="0" y="0" width="{E_B}" height="18"/>'
-          f'<rect x="0" y="71" width="18" height="89"/>'
           f'<rect x="0" y="71" width="{int(E_B * 0.85)}" height="18"/>'
           f'<rect x="0" y="142" width="{E_B}" height="18"/>')
 
-# D: links offen, rechts elliptisch gerundet (Rx 38, Ry 71 auf der Mittellinie).
-D_EMRE = ('<path d="M0 9 H205 A38 71 0 0 1 205 151 H0" fill="none" '
+# D: links offen, rechts ein voller Halbkreis (R 71). Weicher als die
+# Ellipse aus Stand 2, auf Edgars Wunsch.
+D_EMRE = ('<path d="M0 9 H172 A71 71 0 0 1 172 151 H0" fill="none" '
           'stroke="{c}" stroke-width="18"/>')
 
 # G: Spiegelbild der D-Rundung, obere Gerade endet eine halbe Strichstaerke
 # frueher (Referenzdetail), langer Sporn, Abstrich bis zur Grundlinie.
-G_EMRE = ('<path d="M245 9 H49 A38 71 0 0 0 49 151 H254" fill="none" '
+G_EMRE = ('<path d="M245 9 H80 A71 71 0 0 0 80 151 H254" fill="none" '
           'stroke="{c}" stroke-width="18"/>'
           '<rect x="149" y="71" width="105" height="18"/>'
           '<rect x="236" y="71" width="18" height="89"/>')
