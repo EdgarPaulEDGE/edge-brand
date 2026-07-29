@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 """EDGE Corner, Emres Richtung: die Kante als Rahmenecke.
 
-Konstruiert die Ecke im selben Raster wie die Wortmarke und erzeugt alle
-SVG-Dateien. Aenderungen hier machen, nie in den Einzeldateien.
+Stand 2: Emres Feedback vom 29.07.2026 eingearbeitet.
+- Eigener Schriftschnitt nach seiner Referenz (image Kopie.png), pixelgenau
+  vermessen und auf das 160er-Raster normalisiert (Faktor 1,882):
+  E mit Stamm unten links und 85%-Mittelbalken, D und G elliptisch gerundet,
+  enge Sperrung 35 statt 70.
+- Ecke nach Referenz: Mitte des horizontalen Schenkels liegt exakt auf der
+  Wortkante, Abstand oben = halbe Versalhoehe, Schenkel bis zur Grundlinie,
+  Schraegschnitt am Ende, kleine Radien statt weicher Rundung.
+- Verlauf endet unten in Rot (#FF6B6B, das EDGE-Rot), nicht in Purple/Pink.
 
-Raster: Versalhoehe 160, Buchstabenbreite 200, Strichstaerke 18.
-Strichstaerken-Leiter: 11 (Light) -> 18 (Regulaer) -> 30 (Ecke),
-jeder Schritt Faktor 1,64. Die Ecke ist damit kein Fremdkoerper,
-sondern die naechste Sprosse derselben Leiter.
-
-Referenz vermessen (image Kopie.png): Buchstaben 10-11 px, Ecke 18 px,
-Faktor 1,7. Der Verlauf laeuft hell -> dunkel um die Ecke; das Magenta
-der Referenz ist kein CI-Ton und wird durch Purple ersetzt.
+Messwerte Referenz: Versal 85px, Strich ~10px (18 im Raster), E-Mittelbalken
+99/116 = 85%, Abstaende 17-19px (~35), Ecke: H-Schenkel 155px (~292, Mitte
+ueber Wortende), Abstand oben 44px (~83 -> 80), V-Schenkel bis Grundlinie,
+Schraege ca. 30 Grad nach aussen-unten.
 """
 import os
 
@@ -24,51 +27,75 @@ WEISS = "#F4F6FF"
 CYAN = "#00E2E2"
 BLAU = "#009FF4"
 PURPLE = "#C15DE6"
+ROT = "#FF6B6B"
 
-# ---------------------------------------------------------------- Wortmarke
-# identisch zur Hauptmarke (offener Schnitt)
-E_OFFEN = ('<rect x="0" y="0" width="200" height="18"/>'
-           '<rect x="0" y="71" width="88" height="18"/>'
-           '<rect x="0" y="142" width="200" height="18"/>')
-E_OFFEN_M = ('<rect x="0" y="0" width="200" height="18"/>'
-             '<rect x="112" y="71" width="88" height="18"/>'
-             '<rect x="0" y="142" width="200" height="18"/>')
-D = '<path d="M0 9 H120 A71 71 0 0 1 120 151 H0" fill="none" stroke="{c}" stroke-width="18"/>'
-G = ('<path d="M200 9 H80 A71 71 0 0 0 80 151 H200" fill="none" stroke="{c}" stroke-width="18"/>'
-     '<rect x="126" y="71" width="74" height="18"/>'
-     '<rect x="182" y="71" width="18" height="89"/>')
+# ---------------------------------------------------------------- Emre-Schnitt
+# Raster: Versalhoehe 160, Strichstaerke 18, Balken-y wie die Hauptmarke
+# (0/71/142), aber eigene Breiten, engere Sperrung und andere Formen.
+E_B, D_B, G_B = 220, 252, 254
+ABST = 35                          # Buchstabenabstand (Referenz 32-36)
 
-WORT = "".join(f'<g transform="translate({x},0)">{t}</g>'
-               for t, x in [(E_OFFEN, 0), (D, 270), (G, 516), (E_OFFEN_M, 786)])
-WORT_B = 986
+# E: oberer Balken frei, Mittel- und Unterbalken haengen am Stamm unten links.
+# Mittelbalken 85% der Breite. Das ist Emres "Strich ganz, nicht halb".
+E_EMRE = (f'<rect x="0" y="0" width="{E_B}" height="18"/>'
+          f'<rect x="0" y="71" width="18" height="89"/>'
+          f'<rect x="0" y="71" width="{int(E_B * 0.85)}" height="18"/>'
+          f'<rect x="0" y="142" width="{E_B}" height="18"/>')
+
+# D: links offen, rechts elliptisch gerundet (Rx 38, Ry 71 auf der Mittellinie).
+D_EMRE = ('<path d="M0 9 H205 A38 71 0 0 1 205 151 H0" fill="none" '
+          'stroke="{c}" stroke-width="18"/>')
+
+# G: Spiegelbild der D-Rundung, obere Gerade endet eine halbe Strichstaerke
+# frueher (Referenzdetail), langer Sporn, Abstrich bis zur Grundlinie.
+G_EMRE = ('<path d="M245 9 H49 A38 71 0 0 0 49 151 H254" fill="none" '
+          'stroke="{c}" stroke-width="18"/>'
+          '<rect x="149" y="71" width="105" height="18"/>'
+          '<rect x="236" y="71" width="18" height="89"/>')
+
+_x = 0
+_teile = []
+for _g, _b in [(E_EMRE, E_B), (D_EMRE, D_B), (G_EMRE, G_B), (E_EMRE, E_B)]:
+    _teile.append(f'<g transform="translate({_x},0)">{_g}</g>')
+    _x += _b + ABST
+WORT = "".join(_teile)
+WORT_B = _x - ABST                 # 1051, Referenz gemessen 1052
 
 # ---------------------------------------------------------------- Ecke
-ECKE_STRICH = 30          # Leiter 11 -> 18 -> 30, Faktor 1,64
-ECKE_H = 200              # horizontaler Schenkel = eine Buchstabenbreite
-ECKE_ENDE = 80            # der Schenkel greift bis zur Mittelachse des Wortes
-ABSTAND = 54              # die Schutzzone; die Ecke haelt sie selbst ein
+# Als gefuellte Flaeche, nicht als Stroke: nur so lassen sich Aussenradius,
+# fast scharfe Innenecke und der Schraegschnitt getrennt kontrollieren.
+ECKE_STRICH = 30                   # Leiter 11 -> 18 -> 30, Faktor 1,64
+ECKE_H = 300                       # horizontaler Schenkel
+ABSTAND_OBEN = 80                  # halbe Versalhoehe
+SCHRAEG = 16                       # Schraegschnitt: aussen laeuft 16 tiefer aus
+R_AUS, R_IN = 22, 6
 
-# Aussenkanten: rechts x=WORT_B+ABSTAND+ECKE_STRICH, oben y=-ABSTAND-ECKE_STRICH
-# Mittellinien daraus:
-mx = WORT_B + ABSTAND + ECKE_STRICH / 2          # 1031
-my = -ABSTAND - ECKE_STRICH / 2                  # -69
-x0 = WORT_B + ABSTAND + ECKE_STRICH - ECKE_H     # 876: Beginn des horizontalen Schenkels
-y1 = ECKE_ENDE                                   # Ende auf der Wortmitte
+X_OUT = WORT_B + ECKE_H // 2       # 1201: Mitte des Schenkels = Wortkante
+X_IN = X_OUT - ECKE_STRICH
+X0 = X_OUT - ECKE_H                # 901
+Y_IN = -ABSTAND_OBEN               # -80
+Y_OUT = Y_IN - ECKE_STRICH         # -110
+Y_ENDE = 160                       # Grundlinie
 
-def ecke(stroke):
-    """Die Rahmenecke als ein Pfad. Runde Aussenecke (linejoin) verbindet die
-    Formsprache der Boegen von D und G mit den flachen Balken der E's."""
-    return (f'<path d="M{x0} {my} H{mx} V{y1}" fill="none" stroke="{stroke}" '
-            f'stroke-width="{ECKE_STRICH}" stroke-linejoin="round" stroke-linecap="butt"/>')
+def ecke_pfad(x0=X0, x_out=X_OUT, y_out=Y_OUT, y_in=Y_IN,
+              y_ende=Y_ENDE, schraeg=SCHRAEG):
+    """Rahmenecke als geschlossene Flaeche mit Schraegschnitt unten."""
+    x_in = x_out - ECKE_STRICH
+    return (f'M{x0} {y_out} H{x_out - R_AUS} '
+            f'A{R_AUS} {R_AUS} 0 0 1 {x_out} {y_out + R_AUS} '
+            f'V{y_ende + schraeg} L{x_in} {y_ende} V{y_in + R_IN} '
+            f'A{R_IN} {R_IN} 0 0 0 {x_in - R_IN} {y_in} H{x0} Z')
 
-VERLAUF = (f'<linearGradient id="kante" gradientUnits="userSpaceOnUse" '
-           f'x1="{x0}" y1="{my}" x2="{mx}" y2="{y1}">'
-           f'<stop offset="0" stop-color="{CYAN}"/>'
-           f'<stop offset=".5" stop-color="{BLAU}"/>'
-           f'<stop offset="1" stop-color="{PURPLE}"/></linearGradient>')
+def verlauf(gid, x0, y0, x1, y1):
+    """Cyan ueber Blau und Purple bis Rot, hell nach dunkel um die Ecke."""
+    return (f'<linearGradient id="{gid}" gradientUnits="userSpaceOnUse" '
+            f'x1="{x0}" y1="{y0}" x2="{x1}" y2="{y1}">'
+            f'<stop offset="0" stop-color="{CYAN}"/>'
+            f'<stop offset=".38" stop-color="{BLAU}"/>'
+            f'<stop offset=".68" stop-color="{PURPLE}"/>'
+            f'<stop offset="1" stop-color="{ROT}"/></linearGradient>')
 
-LOCKUP_VB = f"0 {my - ECKE_STRICH / 2 - 6} {mx + ECKE_STRICH / 2 + 6} {160 - (my - ECKE_STRICH / 2 - 6) + 6}"
-# etwas Luft (6) rundum, damit die runde Ecke nicht am Rand klebt
+LOCKUP_VB = f"-6 {Y_OUT - 6} {X_OUT + 12} {Y_ENDE + SCHRAEG - Y_OUT + 12}"
 
 
 def schreibe(name, viewbox, inhalt):
@@ -79,40 +106,33 @@ def schreibe(name, viewbox, inhalt):
 # ---------------------------------------------------------------- Lockups
 for cname, farbe in [("white", "#FFFFFF"), ("black", "#000000"),
                      ("ci-weiss", WEISS), ("ci-schwarz", SCHWARZ)]:
-    inhalt = (f'<g fill="{farbe}" color="{farbe}">{WORT.format(c=farbe)}</g>'
-              + ecke(farbe))
+    inhalt = (f'<g fill="{farbe}">{WORT.format(c=farbe)}</g>'
+              f'<path d="{ecke_pfad()}" fill="{farbe}"/>')
     schreibe(f"edge-corner-mono-{cname}.svg", LOCKUP_VB, inhalt)
 
-# Verlauf auf der Ecke, Wort monochrom (die Referenz-treue Fassung)
 for cname, farbe in [("auf-dunkel", WEISS), ("auf-hell", SCHWARZ)]:
-    inhalt = (f'<defs>{VERLAUF}</defs>'
-              f'<g fill="{farbe}" color="{farbe}">{WORT.format(c=farbe)}</g>'
-              + ecke("url(#kante)"))
+    inhalt = (f'<defs>{verlauf("kante", X0, Y_OUT, X_OUT, Y_ENDE)}</defs>'
+              f'<g fill="{farbe}">{WORT.format(c=farbe)}</g>'
+              f'<path d="{ecke_pfad()}" fill="url(#kante)"/>')
     schreibe(f"edge-corner-verlauf-{cname}.svg", LOCKUP_VB, inhalt)
 
-# ---------------------------------------------------------------- Icon: E in der Ecke
-# Das Icon ist das letzte E der Wortmarke mit derselben Ecke: Abstand 54,
-# horizontaler Schenkel 200, Ende auf der Mittelachse des E. Keine neuen Zahlen.
-i_mx = 200 + ABSTAND + ECKE_STRICH / 2            # 269
-i_my = -ABSTAND - ECKE_STRICH / 2                 # -69
-i_x0 = i_mx + ECKE_STRICH / 2 - ECKE_H            # 84
-ICON_VB = f"-14 {i_my - ECKE_STRICH / 2 - 14} {i_mx + ECKE_STRICH / 2 + 28} {160 - i_my + ECKE_STRICH / 2 + 28}"
+# ---------------------------------------------------------------- Icon
+# Dieselben Regeln auf ein einzelnes E: Schenkelmitte ueber der E-Kante,
+# Abstand oben 80, bis zur Grundlinie mit Schraegschnitt.
+I_XOUT = E_B + ECKE_H // 2         # 370
+I_X0 = I_XOUT - ECKE_H             # 70
+ICON_VB = f"-14 {Y_OUT - 14} {I_XOUT + 28} {Y_ENDE + SCHRAEG - Y_OUT + 28}"
 
-def icon_pfad(stroke):
-    return (f'<path d="M{i_x0} {i_my} H{i_mx} V{ECKE_ENDE}" fill="none" stroke="{stroke}" '
-            f'stroke-width="{ECKE_STRICH}" stroke-linejoin="round" stroke-linecap="butt"/>')
+def icon_pfad():
+    return ecke_pfad(x0=I_X0, x_out=I_XOUT)
 
 for cname, farbe in [("white", "#FFFFFF"), ("black", "#000000"), ("ci-weiss", WEISS)]:
     schreibe(f"edge-corner-icon-mono-{cname}.svg", ICON_VB,
-             f'<g fill="{farbe}">{E_OFFEN}</g>' + icon_pfad(farbe))
+             f'<g fill="{farbe}">{E_EMRE}</g><path d="{icon_pfad()}" fill="{farbe}"/>')
 
-ICON_VERLAUF = ('<linearGradient id="kante" gradientUnits="userSpaceOnUse" '
-                f'x1="{i_x0}" y1="{i_my}" x2="{i_mx}" y2="{ECKE_ENDE}">'
-                f'<stop offset="0" stop-color="{CYAN}"/>'
-                f'<stop offset=".5" stop-color="{BLAU}"/>'
-                f'<stop offset="1" stop-color="{PURPLE}"/></linearGradient>')
 schreibe("edge-corner-icon-verlauf.svg", ICON_VB,
-         f'<defs>{ICON_VERLAUF}</defs><g fill="{WEISS}">{E_OFFEN}</g>' + icon_pfad("url(#kante)"))
+         f'<defs>{verlauf("kante", I_X0, Y_OUT, I_XOUT, Y_ENDE)}</defs>'
+         f'<g fill="{WEISS}">{E_EMRE}</g><path d="{icon_pfad()}" fill="url(#kante)"/>')
 
+print("Wortbreite:", WORT_B, "| Ecke x", X0, "..", X_OUT, "| viewBox", LOCKUP_VB)
 print("\n".join(sorted(os.listdir(OUT))))
-print(f"\n{len(os.listdir(OUT))} Dateien in {OUT}")
