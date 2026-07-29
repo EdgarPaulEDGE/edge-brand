@@ -1,0 +1,28 @@
+<!doctype html><html lang="de"><meta charset="utf-8">
+<title>EDGE Digital Visitenkarte</title>
+<style>
+  @page { size: A4; margin: 12mm }
+  * { margin:0; padding:0; box-sizing:border-box }
+  body { font-family:"Avenir Next",Avenir,"Nunito Sans","Segoe UI",sans-serif;
+         -webkit-print-color-adjust:exact; display:flex; flex-direction:column; gap:8mm }
+  .karte { width:85mm; height:55mm; position:relative; overflow:hidden;
+            border:.4pt solid #ccc }
+  .vorne { background:#030309; display:flex; align-items:center; justify-content:center }
+  .hinten { background:#fff; padding:8mm; display:flex; flex-direction:column;
+             justify-content:space-between }
+  .name { font-size:11pt; font-weight:500; color:#111 }
+  .rolle { font-size:7.5pt; color:#777; margin-top:.6mm; letter-spacing:.04em }
+  .kontakt { font-size:7.5pt; color:#333; line-height:1.7 }
+  .hinweis { font-size:6pt; color:#999; margin-top:2mm }
+</style>
+<div class="karte vorne"><svg viewBox="0 0 120 160" width="13mm" fill="#F4F6FF" style="display:block"><path d="M0 30 H60 L120 0 V18 L60 48 H0 Z"/><rect x="0" y="86" width="40" height="18"/><path d="M0 142 H60 L120 112 V130 L60 160 H0 Z"/></svg></div>
+<div class="karte hinten">
+  <div><svg viewBox="0 0 1266 160" width="34mm" fill="#000000" style="display:block"><path d="M0 30 H60 L120 0 V18 L60 48 H0 Z"/><rect x="0" y="86" width="40" height="18"/><path d="M0 142 H60 L120 112 V130 L60 160 H0 Z"/><g transform="translate(280,0)"><g transform="translate(0,0)"><rect x="0" y="0" width="200" height="18"/><rect x="0" y="71" width="88" height="18"/><rect x="0" y="142" width="200" height="18"/></g><g transform="translate(270,0)"><path d="M0 9 H120 A71 71 0 0 1 120 151 H0" fill="none" stroke="#000000" stroke-width="18"/></g><g transform="translate(516,0)"><path d="M200 9 H80 A71 71 0 0 0 80 151 H200" fill="none" stroke="#000000" stroke-width="18"/><rect x="126" y="71" width="74" height="18"/><rect x="182" y="71" width="18" height="89"/></g><g transform="translate(786,0)"><rect x="0" y="0" width="200" height="18"/><rect x="112" y="71" width="88" height="18"/><rect x="0" y="142" width="200" height="18"/></g></g></svg></div>
+  <div>
+    <div class="name">Edgar Paul-Ghazaryan</div>
+    <div class="rolle">Inhaber</div>
+  </div>
+  <div class="kontakt">info@edge-digital.ai<br>edge-digital.ai</div>
+</div>
+<div class="hinweis">Endformat 85 x 55 mm. Für die Druckerei zusätzlich 3 mm Beschnitt anlegen.</div>
+</html>

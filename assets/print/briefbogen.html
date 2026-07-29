@@ -1,0 +1,61 @@
+<!doctype html><html lang="de"><meta charset="utf-8">
+<title>EDGE Digital Briefbogen</title>
+<style>
+  @page { size: A4; margin: 0 }
+  * { margin:0; padding:0; box-sizing:border-box }
+  body { font-family:"Avenir Next",Avenir,"Nunito Sans","Segoe UI",sans-serif;
+         font-size:10pt; line-height:1.5; color:#111; -webkit-print-color-adjust:exact }
+  .blatt { width:210mm; height:297mm; position:relative; background:#fff }
+  /* Falz- und Lochmarken nach DIN 5008 */
+  .marke { position:absolute; left:0; width:5mm; height:0; border-top:.4pt solid #999 }
+  .falz1 { top:105mm } .falz2 { top:210mm }
+  .loch { position:absolute; left:0; top:148.5mm; width:8mm; height:0; border-top:.4pt solid #999 }
+  .logo { position:absolute; top:16mm; left:25mm }
+  .anschrift { position:absolute; top:45mm; left:25mm; width:85mm; height:45mm; font-size:10pt }
+  .absender { font-size:6.5pt; color:#666; border-bottom:.4pt solid #bbb;
+               padding-bottom:1mm; margin-bottom:3mm; letter-spacing:.02em }
+  .info { position:absolute; top:45mm; right:20mm; width:55mm; font-size:8pt; color:#444 }
+  .info dt { color:#888; font-size:7pt; letter-spacing:.08em; text-transform:uppercase;
+              margin-top:3mm }
+  .text { position:absolute; top:100mm; left:25mm; right:20mm }
+  .fuss { position:absolute; bottom:12mm; left:25mm; right:20mm; font-size:7pt;
+           color:#666; display:flex; gap:12mm; border-top:.4pt solid #ddd; padding-top:3mm }
+  .fuss div { flex:1 } .fuss b { display:block; color:#111; font-weight:500; margin-bottom:1mm }
+  /* Die Achse als stiller Marker am Blattrand */
+  .achse { position:absolute; top:0; left:105mm; width:.6pt; height:22mm; background:#030309 }
+</style>
+<div class="blatt">
+  <div class="marke falz1"></div><div class="marke falz2"></div><div class="loch"></div>
+  <div class="achse"></div>
+  <div class="logo"><svg viewBox="0 0 1266 160" width="52mm" fill="#000000" style="display:block"><path d="M0 30 H60 L120 0 V18 L60 48 H0 Z"/><rect x="0" y="86" width="40" height="18"/><path d="M0 142 H60 L120 112 V130 L60 160 H0 Z"/><g transform="translate(280,0)"><g transform="translate(0,0)"><rect x="0" y="0" width="200" height="18"/><rect x="0" y="71" width="88" height="18"/><rect x="0" y="142" width="200" height="18"/></g><g transform="translate(270,0)"><path d="M0 9 H120 A71 71 0 0 1 120 151 H0" fill="none" stroke="#000000" stroke-width="18"/></g><g transform="translate(516,0)"><path d="M200 9 H80 A71 71 0 0 0 80 151 H200" fill="none" stroke="#000000" stroke-width="18"/><rect x="126" y="71" width="74" height="18"/><rect x="182" y="71" width="18" height="89"/></g><g transform="translate(786,0)"><rect x="0" y="0" width="200" height="18"/><rect x="112" y="71" width="88" height="18"/><rect x="0" y="142" width="200" height="18"/></g></g></svg></div>
+
+  <div class="anschrift">
+    <div class="absender">EDGE Digital · Musterstraße 1 · 12345 Musterstadt</div>
+    Firma Muster GmbH<br>Frau Erika Mustermann<br>Musterweg 12<br>54321 Beispielstadt
+  </div>
+
+  <div class="info">
+    <dl>
+      <dt>Ansprechpartner</dt><dd>Edgar Paul-Ghazaryan</dd>
+      <dt>E-Mail</dt><dd>info@edge-digital.ai</dd>
+      <dt>Datum</dt><dd>29.07.2026</dd>
+    </dl>
+  </div>
+
+  <div class="text">
+    <p style="font-weight:500;margin-bottom:5mm">Betreff der Nachricht</p>
+    <p>Sehr geehrte Frau Mustermann,</p>
+    <p style="margin-top:4mm">hier steht der Text. Die Schriftgröße 10pt und der
+    Zeilenabstand 1,5 sind so gewählt, dass eine Seite etwa 45 Zeilen trägt.</p>
+    <p style="margin-top:8mm">Mit freundlichen Grüßen</p>
+    <p style="margin-top:12mm">Edgar Paul-Ghazaryan</p>
+  </div>
+
+  <div class="fuss">
+    <div><b>EDGE Digital</b>Musterstraße 1<br>12345 Musterstadt</div>
+    <div><b>Kontakt</b>info@edge-digital.ai<br>edge-digital.ai</div>
+    <div><b>Bank</b>Musterbank<br>DE00 0000 0000 0000 0000 00</div>
+    <div><b>Rechtliches</b>USt-IdNr. DE000000000<br>Inhaber: Edgar Paul-Ghazaryan</div>
+  </div>
+</div>
+</html>

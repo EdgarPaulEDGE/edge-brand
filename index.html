@@ -1,0 +1,730 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EDGE Brand</title>
+<meta name="description" content="Das Markenhandbuch von EDGE Digital: Zeichen, Wortmarke, Raster, Farben, Schrift und alle Dateien zum Herunterladen.">
+<meta name="theme-color" content="#030309">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="assets/favicon/favicon.svg">
+</head>
+<body>
+
+<!-- Die drei Raum-Ebenen der Wizard-Linie: Sterne, Nebel, Vignette. -->
+<canvas id="kosmos"></canvas>
+<div class="nebel"></div>
+<div class="vignette"></div>
+
+<!-- ===================== GEOMETRIE =====================
+  Jede Marke auf dieser Seite ist aus diesen Bausteinen gesetzt, nicht als
+  Bild eingebunden. Raster: Versalhöhe 160, Buchstabenbreite 200,
+  Strichstärke 18 (Light 11). Abstand E→D und G→E ist 70, D→G nur 46:
+  optischer Ausgleich, weil dort zwei Rundungen aufeinandertreffen.
+====================================================== -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="gE">
+    <rect x="0" y="0" width="200" height="18"/>
+    <rect x="0" y="71" width="88" height="18"/>
+    <rect x="0" y="142" width="200" height="18"/>
+  </g>
+  <g id="gEm">
+    <rect x="0" y="0" width="200" height="18"/>
+    <rect x="112" y="71" width="88" height="18"/>
+    <rect x="0" y="142" width="200" height="18"/>
+  </g>
+  <g id="gD"><path d="M0 9 H120 A71 71 0 0 1 120 151 H0" fill="none" stroke="currentColor" stroke-width="18"/></g>
+  <g id="gG">
+    <path d="M200 9 H80 A71 71 0 0 0 80 151 H200" fill="none" stroke="currentColor" stroke-width="18"/>
+    <rect x="126" y="71" width="74" height="18"/>
+    <rect x="182" y="71" width="18" height="89"/>
+  </g>
+
+  <g id="lgE">
+    <rect x="0" y="0" width="200" height="11"/>
+    <rect x="0" y="74.5" width="88" height="11"/>
+    <rect x="0" y="149" width="200" height="11"/>
+  </g>
+  <g id="lgEm">
+    <rect x="0" y="0" width="200" height="11"/>
+    <rect x="112" y="74.5" width="88" height="11"/>
+    <rect x="0" y="149" width="200" height="11"/>
+  </g>
+  <g id="lgD"><path d="M0 5.5 H120 A74.5 74.5 0 0 1 120 154.5 H0" fill="none" stroke="currentColor" stroke-width="11"/></g>
+  <g id="lgG">
+    <path d="M200 5.5 H80 A74.5 74.5 0 0 0 80 154.5 H200" fill="none" stroke="currentColor" stroke-width="11"/>
+    <rect x="134" y="74.5" width="66" height="11"/>
+    <rect x="189" y="74.5" width="11" height="85.5"/>
+  </g>
+
+  <!-- Symbol Fold: das E, an seiner Kante gefaltet. 120 breit, 160 hoch. -->
+  <g id="fold">
+    <path d="M0 30 H60 L120 0 V18 L60 48 H0 Z"/>
+    <rect x="0" y="86" width="40" height="18"/>
+    <path d="M0 142 H60 L120 112 V130 L60 160 H0 Z"/>
+  </g>
+
+  <!-- Wortmarke und Lockups, aus den Buchstaben zusammengesetzt -->
+  <g id="wort">
+    <use href="#gE"/><g transform="translate(270,0)"><use href="#gD"/></g>
+    <g transform="translate(516,0)"><use href="#gG"/></g>
+    <g transform="translate(786,0)"><use href="#gEm"/></g>
+  </g>
+  <g id="wortLight">
+    <use href="#lgE"/><g transform="translate(350,0)"><use href="#lgD"/></g>
+    <g transform="translate(670,0)"><use href="#lgG"/></g>
+    <g transform="translate(1020,0)"><use href="#lgEm"/></g>
+  </g>
+  <g id="lockup">
+    <use href="#fold"/>
+    <g transform="translate(280,0)"><use href="#wort"/></g>
+  </g>
+  <g id="lockupV">
+    <g transform="translate(433,0)"><use href="#fold"/></g>
+    <g transform="translate(0,250)"><use href="#wort"/></g>
+  </g>
+</defs></svg>
+
+
+<div class="buehne">
+<header class="site">
+  <div class="wrap row">
+    <div class="brand">
+      <svg class="lockup marke" viewBox="0 0 1266 160" fill="currentColor"><use href="#lockup"/></svg>
+    </div>
+    <a class="zurueck" href="../edge-tools/"><span class="ic" data-ic="zurueck"></span>EDGE Tools</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="titel">
+    <p class="kicker">Marke</p>
+    <h1>Die Kante steckt <span class="schimmer">schon im Wort.</span></h1>
+    <p class="lead">
+      Zeichen, Wortmarke, Raster, Farben und Schrift von EDGE Digital.
+      Alles auf einem Raster konstruiert, alles zum Herunterladen.
+      Wer hier etwas braucht, muss nichts nachbauen.
+    </p>
+  </section>
+</main>
+
+<nav class="sprung">
+  <div class="wrap inner">
+    <a href="#zeichen">Zeichen</a>
+    <a href="#wortmarke">Wortmarke</a>
+    <a href="#lockup">Lockup</a>
+    <a href="#raster">Raster</a>
+    <a href="#schutz">Schutzzone</a>
+    <a href="#farben">Farben</a>
+    <a href="#schrift">Schrift</a>
+    <a href="#achse">Die Achse</a>
+    <a href="#regeln">Regeln</a>
+    <a href="#dateien">Dateien</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- ============ ZEICHEN ============ -->
+  <section id="zeichen">
+    <p class="snum">01 · Zeichen</p>
+    <h2>Fold</h2>
+    <p class="sub">
+      Das E aus der Wortmarke, an seiner Kante gefaltet. Links liegt die Fläche flach,
+      rechts der Achse kippt sie weg. Symbol und Buchstabe sind dasselbe Objekt aus
+      zwei Blickwinkeln. Deshalb braucht das Zeichen keine Erklärung neben dem Wort,
+      es ist das Wort.
+    </p>
+
+    <div class="gitter g2">
+      <div class="panel">
+        <div class="buehne-logo" style="min-height:250px">
+          <svg class="marke" viewBox="0 0 120 160" width="120" fill="currentColor"><use href="#fold"/></svg>
+        </div>
+        <div class="zeile-klein">
+          <span class="lbl">44 px</span>
+          <svg class="marke" viewBox="0 0 120 160" width="33" fill="currentColor"><use href="#fold"/></svg>
+          <span class="lbl">22 px</span>
+          <svg class="marke" viewBox="0 0 120 160" width="17" fill="currentColor"><use href="#fold"/></svg>
+          <span class="lbl">14 px</span>
+          <svg class="marke" viewBox="0 0 120 160" width="11" fill="currentColor"><use href="#fold"/></svg>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="buehne-logo hell" style="min-height:250px">
+          <svg class="marke" viewBox="0 0 120 160" width="120" fill="currentColor"><use href="#fold"/></svg>
+        </div>
+        <div class="zeile-klein">
+          <span class="lbl">Auf Hell ohne Korrektur</span>
+          <p class="klein" style="flex:1;min-width:200px">
+            Das Zeichen hängt an keinem Verlauf und keinem Effekt. Es funktioniert
+            invertiert, geprägt, gestickt und einfarbig gedruckt.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WORTMARKE ============ -->
+  <section id="wortmarke">
+    <p class="snum">02 · Wortmarke</p>
+    <h2>EDGE ist ein visuelles Palindrom</h2>
+    <p class="sub">
+      E und E sind Spiegelbilder. D und G ebenfalls, sobald man G als gespiegeltes D
+      plus Sporn konstruiert. Damit ist das ganze Wort achsensymmetrisch, bis auf
+      diesen einen Sporn. Die Symmetrieachse liegt genau zwischen D und G.
+      Dort sitzt die Kante, die der Marke den Namen gibt.
+    </p>
+
+    <div class="panel">
+      <div class="buehne-logo" style="min-height:230px;padding:56px 34px">
+        <svg class="marke" viewBox="-20 -54 1026 268" width="720">
+          <line x1="493" y1="-42" x2="493" y2="204" stroke="#00E2E2" stroke-width="2" stroke-dasharray="4 7"/>
+          <text x="493" y="-50" fill="#00E2E2" font-size="15" font-family="ui-monospace,Menlo,monospace"
+                text-anchor="middle" letter-spacing="2">DIE KANTE</text>
+          <g fill="#F4F6FF" color="#F4F6FF">
+            <use href="#gE"/><g transform="translate(270,0)"><use href="#gD"/></g>
+          </g>
+          <g fill="#6E7180" color="#6E7180">
+            <g transform="translate(516,0)"><use href="#gG"/></g>
+            <g transform="translate(786,0)"><use href="#gEm"/></g>
+          </g>
+        </svg>
+      </div>
+      <p class="klein" style="text-align:center;max-width:62ch;margin:18px auto 0">
+        Hell ist die linke Hälfte, gedimmt die rechte. Klappt man die eine auf die andere,
+        decken sie sich vollständig.
+      </p>
+    </div>
+
+    <div class="gitter g2" style="margin-top:16px">
+      <div class="panel">
+        <h3>Regulär</h3>
+        <p class="klein" style="margin-bottom:18px">Strichstärke 18. Der Schnitt für alles bis herunter zu 70 Pixel Breite.</p>
+        <div class="buehne-logo" style="min-height:130px">
+          <svg class="marke" viewBox="0 0 986 160" width="420" fill="currentColor"><use href="#wort"/></svg>
+        </div>
+        <div class="zeile-klein">
+          <span class="lbl">120 px</span>
+          <svg class="marke" viewBox="0 0 986 160" width="120" fill="currentColor"><use href="#wort"/></svg>
+          <span class="lbl">70 px</span>
+          <svg class="marke" viewBox="0 0 986 160" width="70" fill="currentColor"><use href="#wort"/></svg>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Light</h3>
+        <p class="klein" style="margin-bottom:18px">Strichstärke 11, weiter gesperrt. Nur für Hero, Print, Messewand und Fahrzeug. Unter 160 Pixel Breite bricht der Schnitt zusammen.</p>
+        <div class="buehne-logo" style="min-height:130px">
+          <svg class="marke" viewBox="0 0 1220 160" width="420" fill="currentColor"><use href="#wortLight"/></svg>
+        </div>
+        <div class="zeile-klein">
+          <span class="lbl">160 px</span>
+          <svg class="marke" viewBox="0 0 1220 160" width="160" fill="currentColor"><use href="#wortLight"/></svg>
+          <span class="lbl">70 px · bricht</span>
+          <svg class="marke" viewBox="0 0 1220 160" width="70" fill="currentColor"><use href="#wortLight"/></svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LOCKUP ============ -->
+  <section id="lockup">
+    <p class="snum">03 · Lockup</p>
+    <h2>Symbol und Wort zusammen</h2>
+    <p class="sub">
+      Symbol und Wortmarke stehen im selben Raster: Höhe 160, Strichstärke 18.
+      Deshalb wird nichts skaliert, sondern nur gesetzt. Der Abstand ist 160 und
+      damit mehr als das Doppelte des Buchstabenabstands. Sonst liest man das
+      Symbol als weiteren Buchstaben.
+    </p>
+
+    <div class="gitter g2">
+      <div class="panel">
+        <h3>Horizontal</h3>
+        <p class="klein" style="margin-bottom:18px">Der Standard. Website-Kopf, Briefbogen, Präsentation, Signatur.</p>
+        <div class="buehne-logo">
+          <svg class="marke" viewBox="0 0 1266 160" width="440" fill="currentColor"><use href="#lockup"/></svg>
+        </div>
+      </div>
+      <div class="panel">
+        <h3>Vertikal</h3>
+        <p class="klein" style="margin-bottom:18px">Für quadratische und hohe Flächen. Social-Profil, Messewand, Fahrzeugheck.</p>
+        <div class="buehne-logo">
+          <svg class="marke" viewBox="0 0 986 410" width="230" fill="currentColor"><use href="#lockupV"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" style="margin-top:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:20px">
+        <h3 style="margin:0">Auf hellem Grund</h3>
+        <div class="schalter" id="grundSchalter">
+          <button class="an" data-grund="dunkel">Dunkel</button>
+          <button data-grund="hell">Hell</button>
+        </div>
+      </div>
+      <div class="buehne-logo" id="grundBuehne">
+        <svg class="marke" viewBox="0 0 1266 160" width="520" fill="currentColor"><use href="#lockup"/></svg>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RASTER ============ -->
+  <section id="raster">
+    <p class="snum">04 · Konstruktion</p>
+    <h2>Nichts davon ist nach Gefühl gesetzt</h2>
+    <p class="sub">
+      Jede Zahl hier ist eine Regel. Wer die Marke neu baut, in einer anderen Software
+      nachzeichnet oder auf ein neues Format bringt, arbeitet mit diesen Werten.
+    </p>
+
+    <div class="panel">
+      <div class="werte">
+        <div class="z"><span class="k">Versalhöhe</span><span class="v">160</span>
+          <span class="b">Die Bezugsgröße. Alle anderen Werte sind Anteile davon.</span></div>
+        <div class="z"><span class="k">Buchstabenbreite</span><span class="v">200</span>
+          <span class="b">Breiter als hoch. Das macht die weite, technische Anmutung.</span></div>
+        <div class="z"><span class="k">Strichstärke</span><span class="v">18</span>
+          <span class="b">Verhältnis 1 zu 8,9. In der Light-Variante 11, also 1 zu 14,5.</span></div>
+        <div class="z"><span class="k">Mittelbalken E</span><span class="v">88</span>
+          <span class="b">44 Prozent der Buchstabenbreite. Kürzer als üblich, dadurch kippt das E vom Buchstaben zum Zeichen.</span></div>
+        <div class="z"><span class="k">Abstand E→D, G→E</span><span class="v">70</span>
+          <span class="b">Der Normalabstand zwischen zwei geraden Kanten.</span></div>
+        <div class="z"><span class="k">Abstand D→G</span><span class="v">46</span>
+          <span class="b">Optischer Ausgleich. Zwei Rundungen weichen zurück und erzeugen sonst ein Loch in der Wortmitte.</span></div>
+        <div class="z"><span class="k">Symbolbreite</span><span class="v">120</span>
+          <span class="b">Bei Höhe 160. Das Symbol steht im selben Raster wie die Buchstaben.</span></div>
+        <div class="z"><span class="k">Abstand Symbol→Wort</span><span class="v">160</span>
+          <span class="b">Mehr als das Doppelte des Buchstabenabstands, sonst verschmilzt es zum fünften Buchstaben.</span></div>
+        <div class="z"><span class="k">Knickwinkel Symbol</span><span class="v">26,6°</span>
+          <span class="b">Rechts der Achse steigen die Balken auf 60 Einheiten Länge um 30 an.</span></div>
+      </div>
+    </div>
+
+    <div class="hinweis">
+      <span class="k">Merke</span>
+      <p>
+        <b>Strichstärke schlägt Höhe.</b> Wer ein Symbol neben Schrift setzt, gleicht die
+        Strichstärke an, nicht die Höhe. Skaliert man ein Zeichen auf Versalhöhe, wächst
+        seine Strichstärke mit und es drängelt neben den Buchstaben.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ SCHUTZZONE ============ -->
+  <section id="schutz">
+    <p class="snum">05 · Schutzzone und Größen</p>
+    <h2>Wie viel Luft die Marke braucht</h2>
+    <p class="sub">
+      Die Schutzzone ist ein Drittel der Versalhöhe, also 54 Einheiten, rundum.
+      Darin steht nichts: kein Text, keine Linie, keine Bildkante.
+      Bei einem 40 Pixel hohen Logo sind das 13 Pixel Abstand.
+    </p>
+
+    <div class="gitter g2">
+      <div class="panel">
+        <h3>Schutzzone</h3>
+        <p class="klein" style="margin-bottom:18px">Ein Drittel der Versalhöhe, gemessen ab der äußersten Kante.</p>
+        <div class="buehne-logo" style="min-height:200px">
+          <svg class="marke" viewBox="-70 -70 1406 300" width="470">
+            <rect x="-54" y="-54" width="1374" height="268" fill="none"
+                  stroke="#00E2E2" stroke-width="2.5" stroke-dasharray="8 8" opacity=".75"/>
+            <rect x="-54" y="-54" width="54" height="54" fill="rgba(0,226,226,.14)"/>
+            <text x="-27" y="-64" fill="#00E2E2" font-size="20" font-family="ui-monospace,Menlo,monospace"
+                  text-anchor="middle">54</text>
+            <g fill="currentColor"><use href="#lockup"/></g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h3>Mindestgrößen</h3>
+        <p class="klein" style="margin-bottom:18px">Darunter nicht verwenden. Stattdessen auf das Symbol allein wechseln.</p>
+        <div class="werte">
+          <div class="z" style="grid-template-columns:1fr 110px"><span class="k">Lockup digital</span><span class="v">120 px breit</span></div>
+          <div class="z" style="grid-template-columns:1fr 110px"><span class="k">Lockup Druck</span><span class="v">30 mm breit</span></div>
+          <div class="z" style="grid-template-columns:1fr 110px"><span class="k">Wortmarke digital</span><span class="v">70 px breit</span></div>
+          <div class="z" style="grid-template-columns:1fr 110px"><span class="k">Wortmarke Light</span><span class="v">160 px breit</span></div>
+          <div class="z" style="grid-template-columns:1fr 110px"><span class="k">Symbol digital</span><span class="v">14 px hoch</span></div>
+          <div class="z" style="grid-template-columns:1fr 110px"><span class="k">Symbol Druck</span><span class="v">5 mm hoch</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FARBEN ============ -->
+  <section id="farben">
+    <p class="snum">06 · Farben</p>
+    <h2>Ein Akzent, nicht drei</h2>
+    <p class="sub">
+      Die Marke ist weiß auf Schwarz. Cyan ist der einzige Akzent, der auf dem Logo
+      selbst vorkommen darf, und auch nur als Lichtpunkt. Blau und Purple gehören in
+      Oberflächen, Diagramme und Verläufe, nie ins Logo. Klick auf eine Kachel kopiert den Wert.
+    </p>
+
+    <div class="farben">
+      <button class="farbe" data-hex="#030309">
+        <span class="flaeche" style="background:#030309;border-bottom:1px solid rgba(244,246,255,.14)"></span>
+        <span class="daten"><span class="fname">Raum</span>
+          <span class="fhex">#030309 <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Hintergrund. Kein reines Schwarz, dadurch wirken Weiß und Cyan wärmer.</span></span>
+      </button>
+      <button class="farbe" data-hex="#F4F6FF">
+        <span class="flaeche" style="background:#F4F6FF"></span>
+        <span class="daten"><span class="fname">Weiß</span>
+          <span class="fhex">#F4F6FF <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Schrift und Marke. Leicht kühl, passt zum Blau der Akzente.</span></span>
+      </button>
+      <button class="farbe" data-hex="#00E2E2">
+        <span class="flaeche" style="background:#00E2E2"></span>
+        <span class="daten"><span class="fname">Cyan</span>
+          <span class="fhex">#00E2E2 <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Der Akzent. Lichtpunkt, Fokus, aktiver Zustand.</span></span>
+      </button>
+      <button class="farbe" data-hex="#009FF4">
+        <span class="flaeche" style="background:#009FF4"></span>
+        <span class="daten"><span class="fname">Blau</span>
+          <span class="fhex">#009FF4 <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Verläufe und Diagramme. Nie als Schriftfarbe auf Schwarz.</span></span>
+      </button>
+      <button class="farbe" data-hex="#C15DE6">
+        <span class="flaeche" style="background:#C15DE6"></span>
+        <span class="daten"><span class="fname">Purple</span>
+          <span class="fhex">#C15DE6 <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Dritte Stimme in Verläufen und Datenreihen.</span></span>
+      </button>
+      <button class="farbe" data-hex="#000000">
+        <span class="flaeche" style="background:#000000;border-bottom:1px solid rgba(244,246,255,.14)"></span>
+        <span class="daten"><span class="fname">Druckschwarz</span>
+          <span class="fhex">#000000 <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Nur im Druck. Am Bildschirm gilt Raum.</span></span>
+      </button>
+    </div>
+
+    <h3 style="margin:30px 0 12px">Status</h3>
+    <div class="farben">
+      <button class="farbe" data-hex="#3AD29F">
+        <span class="flaeche" style="background:#3AD29F"></span>
+        <span class="daten"><span class="fname">OK</span>
+          <span class="fhex">#3AD29F <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Erfolg und Live-Zustand. Der Punkt bei „Läuft gerade" in EDGE Tools.</span></span>
+      </button>
+      <button class="farbe" data-hex="#FF6B6B">
+        <span class="flaeche" style="background:#FF6B6B"></span>
+        <span class="daten"><span class="fname">Fehler</span>
+          <span class="fhex">#FF6B6B <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Fehlermeldungen und Verbote. Sparsam, sonst stumpft es ab.</span></span>
+      </button>
+    </div>
+
+    <h3 style="margin:30px 0 12px">Oberfläche</h3>
+    <p class="klein" style="max-width:66ch;margin-bottom:14px">
+      Keine eigenen Grautöne: Alles Gedimmte ist Weiß mit Deckkraft, alle Flächen sind
+      Glas auf Raum. So bleibt der Kontrast auf jedem Untergrund gleich, und Dark ist
+      kein zweites Theme, sondern das einzige.
+    </p>
+    <div class="farben">
+      <button class="farbe" data-hex="rgba(10, 12, 24, 0.40)">
+        <span class="flaeche auf-raum"><span style="background:rgba(10,12,24,.4);border-bottom:1px solid rgba(244,246,255,.14)"></span></span>
+        <span class="daten"><span class="fname">Glas</span>
+          <span class="fhex">10 12 24 · 40 % <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Panels und Karten, immer mit backdrop-blur 14 px.</span></span>
+      </button>
+      <button class="farbe" data-hex="rgba(244, 246, 255, 0.14)">
+        <span class="flaeche auf-raum"><span style="box-shadow:inset 0 0 0 2px rgba(244,246,255,.14)"></span></span>
+        <span class="daten"><span class="fname">Haarlinie</span>
+          <span class="fhex">Weiß · 14 % <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Trennlinien und ruhige Ränder. Statt Schatten.</span></span>
+      </button>
+      <button class="farbe" data-hex="rgba(244, 246, 255, 0.28)">
+        <span class="flaeche auf-raum"><span style="box-shadow:inset 0 0 0 2px rgba(244,246,255,.28)"></span></span>
+        <span class="daten"><span class="fname">Haarlinie stark</span>
+          <span class="fhex">Weiß · 28 % <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Ränder von Karten und Eingabefeldern.</span></span>
+      </button>
+      <button class="farbe" data-hex="rgba(244, 246, 255, 0.70)">
+        <span class="flaeche auf-raum"><span style="display:grid;place-items:center;color:rgba(244,246,255,.7);font-size:15px">Text</span></span>
+        <span class="daten"><span class="fname">Weiß 70</span>
+          <span class="fhex">Weiß · 70 % <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Fließtext und Leads.</span></span>
+      </button>
+      <button class="farbe" data-hex="rgba(244, 246, 255, 0.45)">
+        <span class="flaeche auf-raum"><span style="display:grid;place-items:center;color:rgba(244,246,255,.45);font-size:15px">Text</span></span>
+        <span class="daten"><span class="fname">Weiß 45</span>
+          <span class="fhex">Weiß · 45 % <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Nebentexte, Beschriftungen, inaktive Chips.</span></span>
+      </button>
+      <button class="farbe" data-hex="rgba(244, 246, 255, 0.25)">
+        <span class="flaeche auf-raum"><span style="display:grid;place-items:center;color:rgba(244,246,255,.25);font-size:15px">Text</span></span>
+        <span class="daten"><span class="fname">Weiß 25</span>
+          <span class="fhex">Weiß · 25 % <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Platzhalter, Zähler, Kleinstgedrucktes.</span></span>
+      </button>
+      <button class="farbe" data-hex="rgba(244, 246, 255, 0.08)">
+        <span class="flaeche auf-raum"><span style="background:rgba(244,246,255,.08)"></span></span>
+        <span class="daten"><span class="fname">Weiß 08</span>
+          <span class="fhex">Weiß · 8 % <span class="kopieren ic" data-ic="kopie"></span></span>
+          <span class="frolle">Hauchzarte Füllungen, etwa hinter Tastenkürzeln.</span></span>
+      </button>
+    </div>
+
+    <div class="hinweis">
+      <span class="k">Verlauf</span>
+      <p>
+        Der Markenverlauf geht <b>Purple nach Blau nach Cyan</b>, 96 Grad.
+        In CSS: <span style="font-family:var(--mono);font-size:13px">linear-gradient(96deg, #C15DE6, #009FF4 52%, #00E2E2)</span>.
+        Er gehört auf Überschriften-Akzente und Primärknöpfe. Nicht auf Flächen, nicht hinter Text, nie ins Logo.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ SCHRIFT ============ -->
+  <section id="schrift">
+    <p class="snum">07 · Schrift</p>
+    <h2>Avenir Next</h2>
+    <p class="sub">
+      Die Hausschrift, lizenziert und auf jedem Mac vorhanden. Deshalb kein Webfont
+      und keine Netzabfrage. Für Code und technische Werte die System-Monospace.
+      Die Wortmarke ist keine Schrift, sondern gezeichnete Geometrie: Sie lässt sich
+      nicht tippen und darf nicht mit Avenir Next nachgebaut werden.
+    </p>
+
+    <div class="panel">
+      <div class="probe">
+        <div class="meta">H1<br>clamp 38 bis 68<br>700 · -0,03em</div>
+        <div style="font-size:clamp(30px,4.4vw,54px);line-height:1.03;letter-spacing:-.03em;font-weight:700">
+          Die Kante steckt schon im Wort
+        </div>
+      </div>
+      <div class="probe">
+        <div class="meta">H2<br>24 bis 33<br>700 · -0,022em</div>
+        <div style="font-size:28px;line-height:1.15;letter-spacing:-.022em;font-weight:700">
+          Überschrift zweiter Ordnung
+        </div>
+      </div>
+      <div class="probe">
+        <div class="meta">Lead<br>16 bis 19<br>400 · 70 % Weiß</div>
+        <div style="font-size:18px;color:var(--w-70);max-width:52ch">
+          Einleitungstext steht auf 70 Prozent Deckkraft, nicht auf einem eigenen Grauton.
+          So bleibt der Kontrast auf jedem Untergrund gleich.
+        </div>
+      </div>
+      <div class="probe">
+        <div class="meta">Fließtext<br>15,5<br>400 · 1,55</div>
+        <div style="font-size:15.5px;max-width:60ch">
+          Der laufende Text. Zeilenhöhe 1,55, maximal 66 Zeichen pro Zeile.
+          Längere Zeilen liest niemand zu Ende.
+        </div>
+      </div>
+      <div class="probe">
+        <div class="meta">Kicker<br>Mono 11,5<br>0,26em · Cyan</div>
+        <div style="font-family:var(--mono);font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--cyan);display:flex;align-items:center;gap:12px">
+          <span style="width:34px;height:1px;background:var(--cyan)"></span>Abschnittsmarke
+        </div>
+      </div>
+      <div class="probe">
+        <div class="meta">Marke<br>Mono 10<br>0,1em · 45 % Weiß</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span class="lbl" style="border:1px solid var(--hairline);border-radius:6px;padding:4px 8px">Läuft lokal</span>
+          <span class="lbl" style="border:1px solid var(--hairline);border-radius:6px;padding:4px 8px">Kein Upload</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ACHSE ============ -->
+  <section id="achse">
+    <p class="snum">08 · Bildwelt</p>
+    <h2>Die Achse</h2>
+    <p class="sub">
+      Das Layoutprinzip der Marke, abgeleitet aus der Symmetrieachse im Wort.
+      Eine sehr lange dünne Vertikale, eine sehr breite dünne Horizontale, ein
+      einziger heller Punkt am Schnitt, drumherum viel Nichts. Der Strahl fällt dabei
+      genau in die Lücke zwischen D und G, er schneidet nie einen Buchstaben an.
+    </p>
+
+    <div class="panel" style="padding:0;overflow:hidden">
+      <img src="assets/social/linkedin-banner-1584x396.png" alt="Bannerbeispiel mit der Achse"
+           style="width:100%;height:auto;display:block">
+    </div>
+
+    <div class="gitter g3" style="margin-top:16px">
+      <div class="panel">
+        <h3>Vertikale</h3>
+        <p class="klein">2 Pixel breit, Verlauf von durchsichtig oben nach Weiß am Knoten. Läuft immer durch die Bildmitte.</p>
+      </div>
+      <div class="panel">
+        <h3>Horizontale</h3>
+        <p class="klein">1 Pixel, Cyan in der Mitte, nach außen in Blau auslaufend. Sitzt bei 78 bis 82 Prozent der Höhe.</p>
+      </div>
+      <div class="panel">
+        <h3>Knoten</h3>
+        <p class="klein">Radialer Verlauf von Weiß nach Cyan nach durchsichtig. Der einzige Punkt, an dem die Marke leuchtet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ REGELN ============ -->
+  <section id="regeln">
+    <p class="snum">09 · Regeln</p>
+    <h2>Was nicht passieren darf</h2>
+    <p class="sub">
+      Sechs Fälle, die in der Praxis vorkommen. Wer sich unsicher ist: das Logo nie
+      selbst nachbauen, sondern aus den Dateien unten nehmen.
+    </p>
+
+    <div class="gitter g3">
+      <div class="regel ja">
+        <div class="bild">
+          <svg class="marke" viewBox="0 0 1266 160" width="200" fill="currentColor"><use href="#lockup"/></svg>
+        </div>
+        <div class="txt"><span class="ic" data-ic="ja"></span><p>Weiß auf dunklem Grund. Der Normalfall.</p></div>
+      </div>
+
+      <div class="regel nein">
+        <div class="bild">
+          <svg viewBox="0 0 1266 160" width="200">
+            <defs><linearGradient id="bad1" x1="0" x2="1">
+              <stop offset="0" stop-color="#C15DE6"/><stop offset=".5" stop-color="#009FF4"/><stop offset="1" stop-color="#00E2E2"/>
+            </linearGradient></defs>
+            <g fill="url(#bad1)" color="#009FF4"><use href="#lockup"/></g>
+          </svg>
+        </div>
+        <div class="txt"><span class="ic" data-ic="nein"></span><p>Kein Verlauf im Logo. Der Verlauf gehört in die Oberfläche, nicht in die Marke.</p></div>
+      </div>
+
+      <div class="regel nein">
+        <div class="bild">
+          <svg viewBox="0 0 1266 160" width="200" style="transform:scaleX(1.42)">
+            <g fill="#F4F6FF" color="#F4F6FF"><use href="#lockup"/></g>
+          </svg>
+        </div>
+        <div class="txt"><span class="ic" data-ic="nein"></span><p>Nicht verzerren. Nur proportional skalieren, sonst ändert sich die Strichstärke ungleich.</p></div>
+      </div>
+
+      <div class="regel nein">
+        <div class="bild" style="background:linear-gradient(120deg,#3a3f52,#7b6a8f)">
+          <svg class="marke" viewBox="0 0 1266 160" width="200" fill="currentColor"><use href="#lockup"/></svg>
+        </div>
+        <div class="txt"><span class="ic" data-ic="nein"></span><p>Nicht auf unruhigem Grund. Braucht es ein Foto, kommt das Logo auf eine ruhige Fläche darin.</p></div>
+      </div>
+
+      <div class="regel nein">
+        <div class="bild">
+          <svg viewBox="0 0 1266 160" width="200">
+            <g fill="#F4F6FF" color="#F4F6FF" transform="rotate(-9 633 80)"><use href="#lockup"/></g>
+          </svg>
+        </div>
+        <div class="txt"><span class="ic" data-ic="nein"></span><p>Nicht drehen. Die Marke steht immer waagerecht.</p></div>
+      </div>
+
+      <div class="regel nein">
+        <div class="bild">
+          <svg viewBox="0 0 1266 160" width="200">
+            <g fill="#F4F6FF" color="#F4F6FF"><use href="#fold"/></g>
+            <g transform="translate(150,0)" fill="#F4F6FF" color="#F4F6FF"><use href="#wort"/></g>
+          </svg>
+        </div>
+        <div class="txt"><span class="ic" data-ic="nein"></span><p>Abstand nicht ändern. Bei 150 statt 160 liest sich das Symbol schon als fünfter Buchstabe.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ DATEIEN ============ -->
+  <section id="dateien">
+    <p class="snum">10 · Dateien</p>
+    <h2>Alles zum Mitnehmen</h2>
+    <p class="sub">
+      SVG für alles am Bildschirm und für die Druckerei, PNG für Plattformen, die
+      kein SVG annehmen. Die Druckvorlagen sind A4 und lassen sich direkt aus dem
+      Browser drucken.
+    </p>
+
+    <a class="dl gross" href="assets/edge-marke.zip" download style="margin-bottom:16px">
+      <span class="ic" data-ic="paket"></span>
+      <span><span class="n">Das ganze Paket</span><span class="m">ZIP · Logo, Favicon, Social, Druck</span></span>
+    </a>
+
+    <h3 style="margin:26px 0 12px">Logo</h3>
+    <div class="gitter g3">
+      <a class="dl" href="assets/logo/edge-lockup-ci-weiss.svg" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">Lockup weiß</span><span class="m">SVG · für dunklen Grund</span></span></a>
+      <a class="dl" href="assets/logo/edge-lockup-black.svg" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">Lockup schwarz</span><span class="m">SVG · für hellen Grund</span></span></a>
+      <a class="dl" href="assets/logo/edge-lockup-vertikal-ci-weiss.svg" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">Lockup vertikal</span><span class="m">SVG · weiß</span></span></a>
+      <a class="dl" href="assets/logo/edge-symbol-ci-weiss.svg" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">Symbol Fold</span><span class="m">SVG · weiß</span></span></a>
+      <a class="dl" href="assets/logo/edge-wortmarke-ci-weiss.svg" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">Wortmarke</span><span class="m">SVG · weiß</span></span></a>
+      <a class="dl" href="assets/logo/edge-wortmarke-light-ci-weiss.svg" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">Wortmarke Light</span><span class="m">SVG · weiß</span></span></a>
+    </div>
+
+    <h3 style="margin:26px 0 12px">Favicon und App-Icon</h3>
+    <div class="gitter g3">
+      <a class="dl" href="assets/favicon/favicon.svg" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">favicon.svg</span><span class="m">SVG · moderne Browser</span></span></a>
+      <a class="dl" href="assets/favicon/apple-touch-icon.png" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">Apple Touch Icon</span><span class="m">PNG · 180 px</span></span></a>
+      <a class="dl" href="assets/favicon/icon-512.png" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">App-Icon</span><span class="m">PNG · 512 px maskable</span></span></a>
+      <a class="dl" href="assets/favicon/einbinden.html" download><span class="ic" data-ic="code"></span>
+        <span><span class="n">Einbinden</span><span class="m">HTML · Head-Schnipsel</span></span></a>
+      <a class="dl" href="assets/favicon/site.webmanifest" download><span class="ic" data-ic="code"></span>
+        <span><span class="n">site.webmanifest</span><span class="m">JSON · PWA</span></span></a>
+      <a class="dl" href="assets/favicon/favicon-32.png" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">favicon 32</span><span class="m">PNG · kräftiger Schnitt</span></span></a>
+    </div>
+
+    <h3 style="margin:26px 0 12px">Social</h3>
+    <div class="gitter g3">
+      <a class="dl" href="assets/social/avatar-1000.png" download><span class="ic" data-ic="bild"></span>
+        <span><span class="n">Profilbild</span><span class="m">PNG · 1000 × 1000</span></span></a>
+      <a class="dl" href="assets/social/linkedin-banner-1584x396.png" download><span class="ic" data-ic="bild"></span>
+        <span><span class="n">LinkedIn Banner</span><span class="m">PNG · 1584 × 396</span></span></a>
+      <a class="dl" href="assets/social/x-header-1500x500.png" download><span class="ic" data-ic="bild"></span>
+        <span><span class="n">X Header</span><span class="m">PNG · 1500 × 500</span></span></a>
+      <a class="dl" href="assets/social/youtube-banner-2560x1440.png" download><span class="ic" data-ic="bild"></span>
+        <span><span class="n">YouTube Banner</span><span class="m">PNG · 2560 × 1440</span></span></a>
+      <a class="dl" href="assets/social/og-image-1200x630.png" download><span class="ic" data-ic="bild"></span>
+        <span><span class="n">Link-Vorschau</span><span class="m">PNG · 1200 × 630</span></span></a>
+      <a class="dl" href="assets/social/avatar-1000-hell.png" download><span class="ic" data-ic="bild"></span>
+        <span><span class="n">Profilbild hell</span><span class="m">PNG · 1000 × 1000</span></span></a>
+    </div>
+
+    <h3 style="margin:26px 0 12px">Druck</h3>
+    <div class="gitter g3">
+      <a class="dl" href="assets/print/briefbogen.pdf" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">Briefbogen</span><span class="m">PDF · A4 nach DIN 5008</span></span></a>
+      <a class="dl" href="assets/print/visitenkarte.pdf" download><span class="ic" data-ic="datei"></span>
+        <span><span class="n">Visitenkarte</span><span class="m">PDF · 85 × 55 mm</span></span></a>
+      <a class="dl" href="assets/print/briefbogen.html" target="_blank"><span class="ic" data-ic="code"></span>
+        <span><span class="n">Briefbogen bearbeiten</span><span class="m">HTML · im Browser öffnen</span></span></a>
+    </div>
+
+    <div class="hinweis">
+      <span class="k">Migration</span>
+      <p>
+        Die übrigen EDGE-Werkzeuge tragen noch den alten Gitter-Würfel im Kopf und im Favicon.
+        Diese Seite ist die erste in der neuen Marke. <b>Die Umstellung der anderen acht ist
+        ein eigener Schritt</b> und sollte auf einmal passieren, nicht nach und nach.
+      </p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <span>EDGE Digital · Marke</span>
+    <a href="../edge-tools/">Zurück zu EDGE Tools</a>
+  </div>
+</footer>
+</div>
+
+<script src="app.js"></script>
+<!-- Der Himmel zuletzt: der Inhalt steht, bevor three.js überhaupt geladen wird. -->
+<script src="kosmos.js"></script>
+</body>
+</html>
