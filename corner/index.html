@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EDGE · Corner-Variante</title>
+<style>
+  :root{
+    --bg:#030309; --panel:#08080F; --panel2:#0C0C16;
+    --line:rgba(255,255,255,.09); --line2:rgba(255,255,255,.16);
+    --fg:#F4F6FF; --dim:rgba(244,246,255,.46); --dim2:rgba(244,246,255,.28);
+    --cy:#00E2E2; --bl:#009FF4; --pu:#C15DE6;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-font-smoothing:antialiased}
+  body{background:var(--bg);color:var(--fg);
+    font-family:"Avenir Next",Avenir,"Nunito Sans","Segoe UI",sans-serif;
+    font-size:15px;line-height:1.6;padding:0 0 140px}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 40px}
+
+  header{padding:100px 0 80px;border-bottom:1px solid var(--line)}
+  .kicker{font-size:11px;letter-spacing:.34em;text-transform:uppercase;color:var(--dim2);margin-bottom:26px}
+  h1{font-size:44px;line-height:1.12;font-weight:600;letter-spacing:-.02em;max-width:20ch}
+  h1 em{font-style:normal;color:var(--dim)}
+  .lead{margin-top:24px;max-width:60ch;color:var(--dim);font-size:16.5px;text-wrap:balance}
+
+  section{padding:80px 0;border-bottom:1px solid var(--line)}
+  section:last-of-type{border-bottom:none}
+  .snum{font-size:11px;letter-spacing:.3em;color:var(--dim2);text-transform:uppercase;margin-bottom:16px}
+  h2{font-size:26px;font-weight:600;letter-spacing:-.015em;margin-bottom:13px}
+  h3{font-size:15.5px;font-weight:600;margin-bottom:8px}
+  .sub{color:var(--dim);max-width:66ch;margin-bottom:40px;text-wrap:balance}
+
+  .grid{display:grid;gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .cardhd{display:flex;align-items:baseline;gap:10px 12px;margin-bottom:6px;flex-wrap:wrap}
+  .name{white-space:nowrap}
+  .tag{font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--dim2)}
+  .name{font-size:15.5px;font-weight:600}
+  .desc{color:var(--dim);font-size:13.5px;line-height:1.62;margin-top:6px}
+
+  .stage{background:var(--panel2);border:1px solid var(--line);border-radius:12px;
+    padding:44px 34px;display:flex;align-items:center;justify-content:center;
+    margin:0 0 20px;min-height:170px}
+  .stage.hell{background:#F4F6FF;border-color:transparent}
+  svg{display:block;overflow:visible}
+  img{max-width:100%;display:block}
+
+  .zeile{display:flex;align-items:center;gap:26px;flex-wrap:wrap;
+    padding-top:18px;margin-top:18px;border-top:1px solid var(--line)}
+  .lbl{font-size:10.5px;color:var(--dim2);letter-spacing:.14em;text-transform:uppercase}
+
+  table{width:100%;border-collapse:collapse;font-size:14px}
+  th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim2);font-weight:400}
+  td.k{color:var(--dim);width:210px}
+  td.v{font-family:ui-monospace,Menlo,monospace;font-size:13px;color:var(--cy);width:110px}
+
+  .note{display:flex;gap:14px;align-items:flex-start;background:rgba(0,226,226,.045);
+    border:1px solid rgba(0,226,226,.18);border-radius:12px;padding:20px 22px;margin-top:24px;
+    font-size:14px;color:rgba(244,246,255,.82)}
+  .note b{color:var(--cy);font-weight:600}
+  .note .k{color:var(--cy);flex:0 0 auto;font-size:11px;letter-spacing:.2em;
+    text-transform:uppercase;padding-top:3px;min-width:88px}
+
+  .pick{border-color:rgba(0,226,226,.32)}
+  .badge{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--cy);
+    border:1px solid rgba(0,226,226,.35);border-radius:99px;padding:3px 10px;margin-left:auto}
+
+  .dl{display:flex;align-items:center;gap:13px;padding:14px 17px;border-radius:12px;
+      border:1px solid var(--line);background:var(--panel2);transition:border-color .18s;
+      color:inherit;text-decoration:none}
+  .dl:hover{border-color:var(--line2)}
+  .dl .pfeil{color:var(--cy);font-size:16px;flex:none}
+  .dl .n{display:block;font-size:13.5px;font-weight:600}
+  .dl .m{display:block;font-family:ui-monospace,Menlo,monospace;font-size:9.5px;
+         letter-spacing:.1em;text-transform:uppercase;color:var(--dim2);margin-top:2px}
+  .pille{font-family:ui-monospace,Menlo,monospace;font-size:10px;letter-spacing:.14em;
+         text-transform:uppercase;color:var(--dim);border:1px solid var(--line);
+         border-radius:999px;padding:7px 13px;text-decoration:none;transition:all .18s}
+  .pille:hover{color:var(--fg);border-color:var(--line2)}
+  footer{padding:64px 0 0;color:var(--dim2);font-size:13px}
+</style>
+</head>
+<body>
+
+<!-- Geometrie: identisches Raster wie die Hauptmarke.
+     Versalhoehe 160, Buchstabenbreite 200, Strichstaerke 18, Ecke 30. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+  <g id="E"><rect x="0" y="0" width="200" height="18"/><rect x="0" y="71" width="88" height="18"/><rect x="0" y="142" width="200" height="18"/></g>
+  <g id="Em"><rect x="0" y="0" width="200" height="18"/><rect x="112" y="71" width="88" height="18"/><rect x="0" y="142" width="200" height="18"/></g>
+  <g id="D"><path d="M0 9 H120 A71 71 0 0 1 120 151 H0" fill="none" stroke="currentColor" stroke-width="18"/></g>
+  <g id="G"><path d="M200 9 H80 A71 71 0 0 0 80 151 H200" fill="none" stroke="currentColor" stroke-width="18"/><rect x="126" y="71" width="74" height="18"/><rect x="182" y="71" width="18" height="89"/></g>
+  <g id="wort"><use href="#E"/><g transform="translate(270,0)"><use href="#D"/></g><g transform="translate(516,0)"><use href="#G"/></g><g transform="translate(786,0)"><use href="#Em"/></g></g>
+  <path id="ecke" d="M876 -69 H1031 V80" fill="none" stroke-width="30" stroke-linejoin="round"/>
+  <linearGradient id="kante" gradientUnits="userSpaceOnUse" x1="876" y1="-69" x2="1031" y2="80">
+    <stop offset="0" stop-color="#00E2E2"/><stop offset=".5" stop-color="#009FF4"/><stop offset="1" stop-color="#C15DE6"/>
+  </linearGradient>
+</defs></svg>
+
+<header>
+  <div class="wrap">
+    <div style="display:flex;gap:9px;margin-bottom:46px">
+      <a class="pille" href="../../edge-tools/">← EDGE Tools</a>
+      <a class="pille" href="../">Markenhandbuch</a>
+    </div>
+    <div class="kicker">EDGE Digital · CI-Exploration · Corner</div>
+    <h1>Deine Ecke,<br><em>zu Ende konstruiert.</em></h1>
+    <p class="lead">
+      Die Skizze mit dem Rahmen-Eck über dem Wortende, ausgearbeitet im selben Raster
+      wie die ganze Marke. Nichts daran ist mehr Augenmaß: Jede Zahl kommt aus dem
+      System, und deshalb passt die Ecke zu allem, was EDGE sonst noch baut.
+    </p>
+  </div>
+</header>
+
+<!-- ============ 01 · VORHER / NACHHER ============ -->
+<section>
+  <div class="wrap">
+    <div class="snum">01 · Ausgangspunkt</div>
+    <h2>Von der Skizze zur Konstruktion</h2>
+    <p class="sub">
+      Links deine Vorlage, rechts die konstruierte Fassung. Was sich geändert hat:
+      Die Ecke sitzt jetzt auf festen Rasterwerten, und das Magenta ist dem
+      CI-Purple gewichen, damit die Marke überall aus denselben drei Farben besteht.
+    </p>
+    <div class="grid g2">
+      <div class="card">
+        <div class="cardhd"><span class="tag">Referenz</span><span class="name">Deine Skizze</span></div>
+        <div class="stage hell" style="padding:30px"><img src="referenz.png" alt="Emres Skizze" style="max-width:420px;width:100%"></div>
+        <div class="desc">Ecke frei platziert, Verlauf Cyan über Lila nach Magenta.</div>
+      </div>
+      <div class="card pick">
+        <div class="cardhd"><span class="tag">Konstruiert</span><span class="name">EDGE Corner</span><span class="badge">Raster</span></div>
+        <div class="stage" style="padding:44px 30px">
+          <svg viewBox="0 -105 1052 292" width="100%" style="max-width:460px">
+            <g fill="#F4F6FF" color="#F4F6FF"><use href="#wort"/></g>
+            <use href="#ecke" stroke="url(#kante)"/>
+          </svg>
+        </div>
+        <div class="desc">Gleiche Idee, aber jede Position und jede Stärke aus dem Raster der Wortmarke abgeleitet.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 · KONSTRUKTION ============ -->
+<section>
+  <div class="wrap">
+    <div class="snum">02 · Konstruktion</div>
+    <h2>Warum die Ecke kein Fremdkörper ist</h2>
+    <p class="sub">
+      Vier Regeln binden die Ecke ans Wort. Wer sie kennt, kann die Marke in jeder
+      Software exakt reproduzieren.
+    </p>
+
+    <div class="card" style="margin-bottom:18px">
+      <div class="stage" style="padding:60px 40px">
+        <svg viewBox="-40 -145 1160 350" width="100%" style="max-width:760px">
+          <!-- Masslinien -->
+          <g stroke="#00E2E2" stroke-width="1.5" opacity=".8">
+            <line x1="986" y1="-12" x2="986" y2="-54"/>
+            <line x1="1016" y1="-54" x2="986" y2="-54"/>
+            <line x1="0" y1="80" x2="1010" y2="80" stroke-dasharray="4 8" opacity=".5"/>
+          </g>
+          <text x="962" y="-30" fill="#00E2E2" font-size="17" font-family="ui-monospace,Menlo,monospace" text-anchor="end">54</text>
+          <text x="-14" y="86" fill="#00E2E2" font-size="17" font-family="ui-monospace,Menlo,monospace" text-anchor="end">Mitte</text>
+          <text x="953" y="-120" fill="#00E2E2" font-size="17" font-family="ui-monospace,Menlo,monospace" text-anchor="end">200</text>
+          <g stroke="#00E2E2" stroke-width="1.5" opacity=".8">
+            <line x1="876" y1="-104" x2="1046" y2="-104"/>
+            <line x1="876" y1="-110" x2="876" y2="-98"/>
+            <line x1="1046" y1="-110" x2="1046" y2="-98"/>
+          </g>
+          <g fill="#F4F6FF" color="#F4F6FF"><use href="#wort"/></g>
+          <use href="#ecke" stroke="#F4F6FF"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="card">
+      <table>
+        <tr><th>Regel</th><th>Wert</th><th>Bedeutung</th></tr>
+        <tr><td class="k">Strichstärke</td><td class="v">30</td>
+          <td>Die Marke hat eine Leiter: 11 (Light), 18 (Wortmarke), 30 (Ecke). Jeder Schritt ist das 1,64-fache. Deine Skizze hatte genau dieses Verhältnis, gemessen 1,7.</td></tr>
+        <tr><td class="k">Horizontaler Schenkel</td><td class="v">200</td>
+          <td>Exakt eine Buchstabenbreite. Die Ecke ist der Umriss eines gedachten fünften Zeichens.</td></tr>
+        <tr><td class="k">Vertikaler Schenkel</td><td class="v">bis 80</td>
+          <td>Endet auf der Mittelachse des Wortes, auf Höhe der Mittelbalken. Dadurch verzahnt sich die Ecke mit dem E daneben, statt frei zu schweben.</td></tr>
+        <tr><td class="k">Abstand zum Wort</td><td class="v">54</td>
+          <td>Die Schutzzone der Marke, ein Drittel der Versalhöhe. Die Ecke hält die Regel selbst ein, die sie bewacht.</td></tr>
+        <tr><td class="k">Außenecke</td><td class="v">rund</td>
+          <td>Verbindet die beiden Formsprachen der Wortmarke: die Bögen von D und G, die flachen Balken der E's.</td></tr>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · VARIANTEN ============ -->
+<section>
+  <div class="wrap">
+    <div class="snum">03 · Varianten</div>
+    <h2>Monochrom trägt, der Verlauf glänzt</h2>
+    <p class="sub">
+      Beide Fassungen sind gebaut. Monochrom ist die Arbeitsversion für Briefbogen,
+      Rechnung, Prägung und alles Kleine. Der Verlauf ist die Bühnenversion für
+      Website, Deck-Titel und Social.
+    </p>
+    <div class="grid g2">
+      <div class="card">
+        <div class="cardhd"><span class="tag">V1</span><span class="name">Monochrom auf Dunkel</span></div>
+        <div class="stage">
+          <svg viewBox="0 -105 1052 292" width="100%" style="max-width:430px">
+            <g fill="#F4F6FF" color="#F4F6FF"><use href="#wort"/></g>
+            <use href="#ecke" stroke="#F4F6FF"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardhd"><span class="tag">V2</span><span class="name">Monochrom auf Hell</span></div>
+        <div class="stage hell">
+          <svg viewBox="0 -105 1052 292" width="100%" style="max-width:430px">
+            <g fill="#030309" color="#030309"><use href="#wort"/></g>
+            <use href="#ecke" stroke="#030309"/>
+          </svg>
+        </div>
+      </div>
+      <div class="card pick">
+        <div class="cardhd"><span class="tag">V3</span><span class="name">Verlauf auf Dunkel</span><span class="badge">Bühne</span></div>
+        <div class="stage">
+          <svg viewBox="0 -105 1052 292" width="100%" style="max-width:430px">
+            <g fill="#F4F6FF" color="#F4F6FF"><use href="#wort"/></g>
+            <use href="#ecke" stroke="url(#kante)"/>
+          </svg>
+        </div>
+        <div class="desc">Cyan läuft über Blau nach Purple, hell nach dunkel um die Ecke, wie in deiner Skizze. Nur eben aus den drei EDGE-Farben.</div>
+      </div>
+      <div class="card">
+        <div class="cardhd"><span class="tag">V4</span><span class="name">Verlauf auf Hell</span></div>
+        <div class="stage hell">
+          <svg viewBox="0 -105 1052 292" width="100%" style="max-width:430px">
+            <g fill="#030309" color="#030309"><use href="#wort"/></g>
+            <use href="#ecke" stroke="url(#kante)"/>
+          </svg>
+        </div>
+        <div class="desc">Funktioniert, weil der Verlauf nur auf der Ecke liegt. Die Schrift bleibt immer einfarbig.</div>
+      </div>
+    </div>
+
+    <div class="note">
+      <div class="k">Farbregel</div>
+      <div>
+        In der EDGE-CI gilt bisher: kein Verlauf im Logo. Wenn diese Linie gewinnt, wird
+        die Regel präzisiert statt gebrochen: <b>Der Verlauf darf ausschließlich auf der
+        Ecke liegen, nie auf den Buchstaben.</b> Damit bleibt die Wortmarke druckbar,
+        prägbar und einfarbig reproduzierbar, und die Ecke ist der eine Ort, an dem die
+        Marke leuchtet, wie sonst der Lichtpunkt auf der Achse.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 · GRÖSSE ============ -->
+<section>
+  <div class="wrap">
+    <div class="snum">04 · Die Größenfrage</div>
+    <h2>"Wie groß, klein, weit das Ding ist, kann man ja reden"</h2>
+    <p class="sub">
+      Dein Satz, hier ist die Antwort zum Anschauen. Dreimal dieselbe Ecke, nur die
+      Schenkellängen ändern sich. Die Strichstärke bleibt konstant bei 30, sonst
+      kippt das Verhältnis zur Schrift.
+    </p>
+    <div class="grid g3">
+      <div class="card">
+        <div class="cardhd"><span class="tag">Dezent</span><span class="name">Schenkel 140 · bis Oberkante</span></div>
+        <div class="stage" style="min-height:150px">
+          <svg viewBox="0 -105 1052 292" width="100%" style="max-width:330px">
+            <g fill="#F4F6FF" color="#F4F6FF"><use href="#wort"/></g>
+            <path d="M936 -69 H1031 V10" fill="none" stroke="#F4F6FF" stroke-width="30" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="desc">Zurückhaltend, fast ein Satzzeichen. Verliert die Rahmen-Wirkung.</div>
+      </div>
+      <div class="card pick">
+        <div class="cardhd"><span class="tag">Standard</span><span class="name">Schenkel 200</span><span class="badge">Empfehlung</span></div>
+        <div class="stage" style="min-height:150px">
+          <svg viewBox="0 -105 1052 292" width="100%" style="max-width:330px">
+            <g fill="#F4F6FF" color="#F4F6FF"><use href="#wort"/></g>
+            <use href="#ecke" stroke="#F4F6FF"/>
+          </svg>
+        </div>
+        <div class="desc">Eine Buchstabenbreite, bis zur Wortmitte. Rahmt, ohne zu erdrücken.</div>
+      </div>
+      <div class="card">
+        <div class="cardhd"><span class="tag">Präsent</span><span class="name">Schenkel 260 · bis Grundlinie</span></div>
+        <div class="stage" style="min-height:150px">
+          <svg viewBox="0 -105 1052 292" width="100%" style="max-width:330px">
+            <g fill="#F4F6FF" color="#F4F6FF"><use href="#wort"/></g>
+            <path d="M816 -69 H1031 V160" fill="none" stroke="#F4F6FF" stroke-width="30" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="desc">Fasst das ganze E ein. Stark auf Postern, im Kleinen zu schwer.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 · ICON ============ -->
+<section>
+  <div class="wrap">
+    <div class="snum">05 · Icon</div>
+    <h2>Die Ecke allein wäre austauschbar, mit dem E ist sie EDGE</h2>
+    <p class="sub">
+      Eck-Klammern benutzen viele. Deshalb trägt das Icon das letzte E der Wortmarke
+      in derselben Ecke, mit exakt den Lockup-Regeln: Abstand 54, Schenkel 200,
+      Ende auf der Mittelachse.
+    </p>
+    <div class="grid g3">
+      <div class="card">
+        <div class="cardhd"><span class="tag">I1</span><span class="name">Monochrom</span></div>
+        <div class="stage" style="min-height:210px">
+          <svg viewBox="-14 -98 312 286" width="150">
+            <g fill="#F4F6FF"><use href="#E"/></g>
+            <path d="M84 -69 H269 V80" fill="none" stroke="#F4F6FF" stroke-width="30" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="zeile">
+          <span class="lbl">44 px</span>
+          <svg viewBox="-14 -98 312 286" width="44"><g fill="#F4F6FF"><use href="#E"/></g><path d="M84 -69 H269 V80" fill="none" stroke="#F4F6FF" stroke-width="30" stroke-linejoin="round"/></svg>
+          <span class="lbl">24 px</span>
+          <svg viewBox="-14 -98 312 286" width="24"><g fill="#F4F6FF"><use href="#E"/></g><path d="M84 -69 H269 V80" fill="none" stroke="#F4F6FF" stroke-width="30" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardhd"><span class="tag">I2</span><span class="name">Verlauf</span></div>
+        <div class="stage" style="min-height:210px">
+          <svg viewBox="-14 -98 312 286" width="150">
+            <defs><linearGradient id="ikante" gradientUnits="userSpaceOnUse" x1="84" y1="-69" x2="269" y2="80">
+              <stop offset="0" stop-color="#00E2E2"/><stop offset=".5" stop-color="#009FF4"/><stop offset="1" stop-color="#C15DE6"/>
+            </linearGradient></defs>
+            <g fill="#F4F6FF"><use href="#E"/></g>
+            <path d="M84 -69 H269 V80" fill="none" stroke="url(#ikante)" stroke-width="30" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="zeile">
+          <span class="lbl">App-Icon-tauglich ab 48 px</span>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardhd"><span class="tag">Ehrlich</span><span class="name">Die Grenze</span></div>
+        <div class="desc" style="margin-top:2px">
+          Unter etwa 24 Pixeln werden die 18er-Balken des E zu fein, das kennt auch die
+          Hauptmarke. Für Favicon-Größen bräuchte diese Linie eine kräftige Fassung mit
+          dickeren E-Balken, so wie Fold eine hat. Machbar, aber noch nicht gebaut,
+          das lohnt erst nach der Grundsatzentscheidung.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 · EINORDNUNG ============ -->
+<section>
+  <div class="wrap">
+    <div class="snum">06 · Einordnung</div>
+    <h2>Corner neben Fold</h2>
+    <p class="sub">
+      Beide kommen aus demselben Raster und derselben Idee, sie erzählen die Kante
+      nur anders. Das ist eine Geschmacks- und Positionierungsfrage, keine Qualitätsfrage.
+    </p>
+    <div class="grid g2">
+      <div class="card">
+        <div class="cardhd"><span class="tag">Corner</span><span class="name">Die Kante rahmt</span></div>
+        <div class="stage" style="min-height:150px">
+          <svg viewBox="0 -105 1052 292" width="100%" style="max-width:400px">
+            <g fill="#F4F6FF" color="#F4F6FF"><use href="#wort"/></g>
+            <use href="#ecke" stroke="url(#kante)"/>
+          </svg>
+        </div>
+        <div class="desc">
+          Erzählt Präzision und Auswahl: Die Ecke markiert, was zählt, wie eine
+          Schnittmarke. Wirkt sofort, braucht keine Erklärung, verträgt Farbe.
+          Risiko: Klammer-Motive nutzen viele, die Eigenständigkeit kommt hier aus
+          Raster und E-Icon, nicht aus der Ecke selbst.
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardhd"><span class="tag">Fold</span><span class="name">Die Kante ist der Buchstabe</span></div>
+        <div class="stage" style="min-height:150px">
+          <svg viewBox="0 0 120 160" width="72">
+            <g fill="#F4F6FF">
+              <path d="M0 30 H60 L120 0 V18 L60 48 H0 Z"/>
+              <rect x="0" y="86" width="40" height="18"/>
+              <path d="M0 142 H60 L120 112 V130 L60 160 H0 Z"/>
+            </g>
+          </svg>
+        </div>
+        <div class="desc">
+          Erzählt Identität: Das E selbst ist an der Kante gefaltet, Symbol und
+          Buchstabe sind dasselbe Objekt. Eigenständiger und als Alleinzeichen
+          stärker, dafür leiser und erklärungsbedürftiger als ein Rahmen.
+        </div>
+      </div>
+    </div>
+    <div class="note">
+      <div class="k">Mein Stand</div>
+      <div>
+        Es muss auch keine Entweder-oder-Entscheidung sein: <b>Fold als Zeichen der Marke,
+        die Ecke als Foto- und Layout-Element</b> (Bildmarkierung, Zitat-Rahmen, Web-Akzente)
+        wäre die Kombination, bei der beide Ideen ihren Platz behalten. Wenn die Ecke ins
+        Logo soll, liegt hier alles fertig.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 · DATEIEN ============ -->
+<section>
+  <div class="wrap">
+    <div class="snum">07 · Dateien</div>
+    <h2>Zum Mitnehmen</h2>
+    <p class="sub">
+      Alle Fassungen als SVG, direkt in Figma oder Illustrator zu öffnen.
+      Die Geometrie-Quelle ist <span style="font-family:ui-monospace,Menlo,monospace;font-size:13px">generator.py</span> im selben Ordner.
+    </p>
+    <div class="grid g3">
+      <a class="dl" href="svg/edge-corner-verlauf-auf-dunkel.svg" download><span class="pfeil">↓</span>
+        <span><span class="n">Lockup Verlauf</span><span class="m">SVG · auf Dunkel</span></span></a>
+      <a class="dl" href="svg/edge-corner-verlauf-auf-hell.svg" download><span class="pfeil">↓</span>
+        <span><span class="n">Lockup Verlauf</span><span class="m">SVG · auf Hell</span></span></a>
+      <a class="dl" href="svg/edge-corner-mono-ci-weiss.svg" download><span class="pfeil">↓</span>
+        <span><span class="n">Lockup mono</span><span class="m">SVG · CI-Weiß</span></span></a>
+      <a class="dl" href="svg/edge-corner-mono-black.svg" download><span class="pfeil">↓</span>
+        <span><span class="n">Lockup mono</span><span class="m">SVG · Schwarz für Hell</span></span></a>
+      <a class="dl" href="svg/edge-corner-icon-verlauf.svg" download><span class="pfeil">↓</span>
+        <span><span class="n">Icon E in Ecke</span><span class="m">SVG · Verlauf</span></span></a>
+      <a class="dl" href="svg/edge-corner-icon-mono-ci-weiss.svg" download><span class="pfeil">↓</span>
+        <span><span class="n">Icon E in Ecke</span><span class="m">SVG · mono</span></span></a>
+      <a class="dl" href="generator.py" download><span class="pfeil">↓</span>
+        <span><span class="n">generator.py</span><span class="m">PY · Geometrie-Quelle</span></span></a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap">
+    <span>EDGE Digital · Corner-Variante für Emre · konstruiert auf dem Raster der Hauptmarke, 29.07.2026</span>
+    <a href="../" style="color:var(--dim);text-decoration:none">Zum Markenhandbuch →</a>
+  </div>
+</footer>
+
+</body>
+</html>
